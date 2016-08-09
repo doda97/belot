@@ -1,0 +1,27 @@
+<resources>
+
+    <string name="app_name">Bela</string>
+
+    <string name="player4">Player 4</string>
+    <string name="player3">Player 3</string>
+    <string name="player2">Player 2</string>
+    <string name="player1">Player 1</string>
+
+    <string name="p1b">p1b</string>
+    <string name="p2b">p2b</string>
+    <string name="p3b">p3b</string>
+    <string name="p4b">p4b</string>
+
+    <string name="p1k">p1k</string>
+    <string name="p2k">p2k</string>
+    <string name="p3k">p3k</string>
+    <string name="p4k">p4k</string>
+
+    <string name="mi">mi score</string>
+    <string name="vi">vi score</string>
+
+    <string name="wrongCard">Please throw valid card.</string>
+
+    <string name="next">Start game</string>
+
+</resources>
