@@ -1,2 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="2963643a928d0a127cf5cf1a89ff2498a36a481f">
+        <dex dex="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_fcd0d356c713261b5b17431d27cc70d40429ffb9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="292a9fa091757208efa65e77eef63088247e51f3">
+        <dex dex="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.2.0_2cbe6ff6d6aeeed7de479e09f6b4459596a65d35/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/dodanovic-doda/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.2.0/support-annotations-23.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="c5bf571bb10462bd90e5419ade67793f71acbc87">
+        <dex dex="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.2.0_b29fccc2b1ead0bad832d60a19c55688f3aba087/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="e5f32fa48a3eb2de0c987025c11b6e3864b634d9">
+        <dex dex="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.2.0_59984229797494cc0f2e11ab172bc59320108bf9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="2dae35db35bb7b722e5e71fe7b3d6c1ef7c0d0d1">
+        <dex dex="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_5dc294793a53cdc5197a70978fa722e85860c06f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/libs/internal_impl-23.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="6e239441500605809818997dd63b62a947195f8c">
+        <dex dex="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.2.0_bcb12c37f225438cbbe40ba7162ab9c09f7b92ef/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="6e3578f92f7462d1a935a1d36173e3bdd1234976">
+        <dex dex="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.2.0_025d702f047ccf932e7fc9bf02c9f1fbddf5b32b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.2"
+        sha1="8c108c22c99e794eff255bb34d2a461200c4cbb0">
+        <dex dex="/home/dodanovic-doda/AndroidStudioProjects/belot/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.2.0_a1d3a6d5dc7eb63a8dc3ccb167d4effdaf765c5c/classes.dex" />
+    </item>
+
+</items>

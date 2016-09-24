@@ -3,7 +3,10 @@ package bela.bela.player;
 import java.util.ArrayList;
 import java.util.List;
 
+import bela.bela.R;
 import bela.bela.cards.Card;
+import bela.bela.game.AdutImageView;
+import bela.bela.game.CardImageView;
 import bela.bela.game.Table;
 
 /**
@@ -18,19 +21,33 @@ public class PlayerDroid implements Player {
     private String name;
     private Card cardOnTable;
     private ArrayList<Card> playerCards = new ArrayList<>(MAX_NUMBER_OF_PLAYER_CARDS);
+    private CardImageView cardImageView;
 
     public PlayerDroid(String name){
         this.name = name;
     }
 
-    public void addPlayerCard(Card card) {
-        playerCards.add(card);
+    public void addPlayerCard(CardImageView cardImageView) {
+        this.cardImageView = cardImageView;
     }
-
-    public void setCardsToPlayerButtons(ArrayList<PlayerButton> playerButtons){}
 
     public void setCardOnTable(Card card){
         this.cardOnTable = card;
+    }
+
+    @Override
+    public void setPlayedCard(Card card) {
+        cardImageView.setCard(card);
+    }
+
+    @Override
+    public void givePlayerCard(Card card) {
+        playerCards.add(card);
+    }
+
+    @Override
+    public Card getPlayedCard() {
+        return null;
     }
 
     @Override
@@ -39,13 +56,18 @@ public class PlayerDroid implements Player {
     }
 
     @Override
-    public Card play(final Table table) {
-        for(Card card:playerCards){
-            if(table.getCardsOnTable().get(0).getCardColor()==card.getCardColor()){
-                return card;
+    public Card play(final Table table, final Player player) {
+        Card playingCard = null;
+        for (Card card : player.getPlayerCards()) {
+            if (card.getCardColor() == table.getCurrentPlayedColor()) {
+                playingCard = card;
+            } else if (card.isAdut()) {
+                playingCard = card;
+            } else {
+                playingCard = card;
             }
         }
-        return null;
+        return playingCard;
     }
 
     public String getName() {

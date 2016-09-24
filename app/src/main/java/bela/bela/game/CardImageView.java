@@ -28,8 +28,8 @@ public class CardImageView extends ImageView {
     }
 
     public void setCard(Card card){
-        setImageResource(card.getImage());
         this.card = card;
+        setImageResource(card.getImage());
     }
 
     public Card getCard() {

@@ -15,20 +15,18 @@ public class Table {
     private static final int MAX_CARDS_ON_TABLE = 4;
 
     private Player playerOnMove;
+    private Player lastFirstPlayerOnMove;
+    private Player lastPlayerOnMove;
 
     private ArrayList<Player> players = new ArrayList<>(NUMBER_OF_PLAYERS);
     private ArrayList<Card> cardsOnTable = new ArrayList<>(MAX_CARDS_ON_TABLE);
-    private ArrayList<CardImageView> cardsOnTableImage = new ArrayList<>(4);
+    private ArrayList<CardImageView> cardsOnTableImage = new ArrayList<>(MAX_CARDS_ON_TABLE);
 
     private Deck deck;
 
-    private ArrayList<PlayerButton> playerButtons = new ArrayList<>(8);
-
-    private ArrayList<AdutImageView> adutImageViews = new ArrayList<>(4);
-
     private CardColor currentAdut;
 
-    private AdutImageView currentAdutImage;
+    private CardColor currentPlayedColor;
 
     public void addPlayer(Player player){
         players.add(player);
@@ -39,7 +37,11 @@ public class Table {
     }
 
     public void setCardOnTable(Card card){
-        cardsOnTable.add(card);
+        for (Player player : getPlayers()) {
+            if (getPlayerOnMove() == player) {
+                player.setCardOnTable(card);
+            }
+        }
         setCardOnTableImage(card);
     }
 
@@ -47,20 +49,27 @@ public class Table {
         this.cardsOnTableImage.get(0).setImageResource(card.getImage());
     }
 
-    public void setCurrentAdut(CardColor adut){
-        this.currentAdut = adut;
+    public void updateColorPlayed() {
+        if (getCardsOnTable().size() > 0) {
+            currentPlayedColor = getCardsOnTable().get(0).getCardColor();
+        }
     }
 
-    public void setCurrentAdutImage(AdutImageView adut){
-        this.currentAdutImage = adut;
+    public void setCurrentAdut(CardColor adut){
+        this.currentAdut = adut;
     }
 
     public void setPlayerOnMove(Player playerOnMove){
         this.playerOnMove = playerOnMove;
     }
 
-    public void addAdutImageView(AdutImageView adutImageView){
-        adutImageViews.add(adutImageView);
+
+    public void setLastFirstPlayerOnMove(Player player) {
+        this.lastFirstPlayerOnMove = player;
+    }
+
+    public void setLastPlayerOnMove(Player player) {
+        this.lastPlayerOnMove = player;
     }
 
     public Deck getDeck(){
@@ -75,27 +84,28 @@ public class Table {
         return cardsOnTable;
     }
 
+    public CardColor getCurrentPlayedColor() {
+        return currentPlayedColor;
+    }
+
     public Player getPlayerOnMove(){
         return playerOnMove;
+    }
+
+    public Player getLastFirstPlayerOnMove() {
+        return lastFirstPlayerOnMove;
+    }
+
+    public Player getLastPlayerOnMove() {
+        return lastPlayerOnMove;
     }
 
     public CardColor getCurrentAdut(){
         return currentAdut;
     }
 
-    public List<AdutImageView> getAdutImageView(){
-        return adutImageViews;
-    }
-
-    public AdutImageView getCurrentAdutImage() {
-        return currentAdutImage;
-    }
-
     public void addCardOnTableImage(CardImageView cardImageView) {
         cardsOnTableImage.add(cardImageView);
     }
 
-    public ArrayList<CardImageView> getCardsOnTableImage() {
-        return cardsOnTableImage;
-    }
 }

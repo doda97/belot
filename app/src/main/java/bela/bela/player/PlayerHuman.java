@@ -3,7 +3,9 @@ package bela.bela.player;
 import java.util.ArrayList;
 import java.util.List;
 
+import bela.bela.R;
 import bela.bela.cards.Card;
+import bela.bela.game.CardImageView;
 import bela.bela.game.Table;
 
 /**
@@ -14,40 +16,46 @@ import bela.bela.game.Table;
 public class PlayerHuman implements Player {
 
     private final static int MAX_NUMBER_OF_PLAYER_CARDS = 8;
-    private final static int MAX_NUMBER_OF_PLAYER_BUTTONS = 8;
 
     private String name;
     private Card cardOnTable;
 
     private ArrayList<Card> playerCards = new ArrayList<>(MAX_NUMBER_OF_PLAYER_CARDS);
-    private ArrayList<PlayerButton> playerButtons = new ArrayList<>(MAX_NUMBER_OF_PLAYER_BUTTONS);
+    private CardImageView cardImageView;
+
 
     public PlayerHuman(String name){
         this.name = name;
     }
 
-    public void addPlayerCard(Card card) {
-        playerCards.add(card);
+    public void addPlayerCard(CardImageView cardImageView) {
+        this.cardImageView = cardImageView;
     }
 
-    @Override
-    public void setCardsToPlayerButtons(ArrayList<PlayerButton> playerButtonIndustry) {
-        for(int i = 0; i<8; i++){
-            playerButtonIndustry.get(i).setCard(getPlayerCards().get(i));
-        }
-        playerButtons.addAll(playerButtonIndustry);
+    public void setPlayedCard(Card card) {
+        cardImageView.setCard(card);
     }
 
     public void setCardOnTable(Card card){
         this.cardOnTable = card;
     }
 
-    public List<PlayerButton> getPlayerButtons(){
-        return playerButtons;
+    @Override
+    public void givePlayerCard(Card card) {
+        playerCards.add(card);
+    }
+
+    public Card getPlayedCard() {
+        return cardImageView.getCard();
     }
 
     @Override
-    public Card play(final Table table) {
+    public List<PlayerButton> getPlayerButtons() {
+        return null;
+    }
+
+    @Override
+    public Card play(final Table table, final Player player) {
         return null;
     }
 

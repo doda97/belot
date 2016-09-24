@@ -23,7 +23,11 @@ public class PlayerButton extends ImageButton {
     }
 
     public void setCard(Card card) {
-        setBackground(getResources().getDrawable(card.getImage()));
+        if (card == null) {
+            setBackground(null);
+        } else {
+            setBackground(getResources().getDrawable(card.getImage()));
+        }
         this.card = card;
     }
 
@@ -32,4 +36,3 @@ public class PlayerButton extends ImageButton {
     }
 
 }
-

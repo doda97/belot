@@ -18,15 +18,19 @@ public interface Player {
 
     List<Card> getPlayerCards();
 
-    void addPlayerCard(Card card);
+    void addPlayerCard(CardImageView cardImageView);
 
     void setCardOnTable(Card card);
 
-    void setCardsToPlayerButtons(ArrayList<PlayerButton> playerButtons);
+    void setPlayedCard(Card card);
+
+    void givePlayerCard(Card card);
+
+    Card getPlayedCard();
 
     List<PlayerButton> getPlayerButtons();
 
-    Card play(final Table table);
+    Card play(final Table table, final Player player);
 
     Card getCardOnTable();
 }

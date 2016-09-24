@@ -1,6 +1,7 @@
 package bela.bela;
 
 import android.content.pm.ActivityInfo;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -63,6 +64,8 @@ public class Igranje extends AppCompatActivity {
         table.addPlayer(player3);
         table.addPlayer(player4);
         table.setPlayerOnMove(player1);
+        table.setLastPlayerOnMove(player1);
+        table.setLastFirstPlayerOnMove(player1);
 
         final AdutImageView zirAadut = (AdutImageView)findViewById(R.id.adutzir);
         final AdutImageView zelenaAdut = (AdutImageView)findViewById(R.id.adutzelena);
@@ -75,6 +78,10 @@ public class Igranje extends AppCompatActivity {
         adutImageViews.add(zelenaAdut);
         adutImageViews.add(bucaAdut);
         adutImageViews.add(hercAdut);
+        adutImageViews.get(0).setAdutColor(CardColor.ZIR);
+        adutImageViews.get(1).setAdutColor(CardColor.HERC);
+        adutImageViews.get(2).setAdutColor(CardColor.BUNDEVA);
+        adutImageViews.get(3).setAdutColor(CardColor.ZELENA);
 
         final Deck deck = new Deck();
 
@@ -85,10 +92,15 @@ public class Igranje extends AppCompatActivity {
         final CardImageView cardThree = (CardImageView) findViewById(R.id.p3b);
         final CardImageView cardFour = (CardImageView) findViewById(R.id.p4b);
 
-        table.addCardOnTableImage(cardOne);
-        table.addCardOnTableImage(cardTwo);
-        table.addCardOnTableImage(cardThree);
-        table.addCardOnTableImage(cardFour);
+        final ArrayList<CardImageView> cardImageView = new ArrayList<>(4);
+        cardImageView.add(cardOne);
+        cardImageView.add(cardTwo);
+        cardImageView.add(cardThree);
+        cardImageView.add(cardFour);
+        table.getPlayers().get(0).addPlayerCard(cardOne);
+        table.getPlayers().get(1).addPlayerCard(cardTwo);
+        table.getPlayers().get(2).addPlayerCard(cardThree);
+        table.getPlayers().get(3).addPlayerCard(cardFour);
 
         final Button b = (Button)findViewById(R.id.next);
 
@@ -99,29 +111,31 @@ public class Igranje extends AppCompatActivity {
             public void onClick(View v) {
                 b.setClickable(false);
                 b.setVisibility(View.INVISIBLE);
-                shuffleCards(table, playerButtons, adutImageViews, currentAdut);
+                shuffleCards(table, playerButtons, adutImageViews, currentAdut, cardImageView);
             }
         });
 
     }
 
-    public void shuffleCards(final Table table, final ArrayList<PlayerButton> playerButtons, final ArrayList<AdutImageView> adutImageViews,final AdutImageView currentAdut){
+    public void shuffleCards(final Table table, final ArrayList<PlayerButton> playerButtons, final ArrayList<AdutImageView> adutImageViews, final AdutImageView currentAdut, final ArrayList<CardImageView> cardImageView) {
 
         ArrayList<Card> deck = table.getDeck().getShuffledDeck();
 
         List<Player> players = table.getPlayers();
 
         for(Player player:players) {
-            for(int i = 0;i<8;i++) {
-                player.addPlayerCard(deck.get(i));
+            for (int j = 0; j < 32; j = j + 8) {
+                for (int i = 0; i < 8; i++) {
+                    player.givePlayerCard(deck.get(i + j));
+                }
             }
         }
 
-        addCardsToButtons(table, playerButtons, adutImageViews, currentAdut);
+        addCardsToButtons(table, playerButtons, adutImageViews, currentAdut, cardImageView);
 
     }
 
-    public void addCardsToButtons(final Table table, final ArrayList<PlayerButton> playerButtons, final ArrayList<AdutImageView> adutImageViews,final AdutImageView currentAdut){
+    public void addCardsToButtons(final Table table, final ArrayList<PlayerButton> playerButtons, final ArrayList<AdutImageView> adutImageViews, final AdutImageView currentAdut, final ArrayList<CardImageView> cardImageView) {
 
         for(Player player:table.getPlayers()){
             sortCards(player.getPlayerCards());
@@ -133,11 +147,11 @@ public class Igranje extends AppCompatActivity {
             playerButtons.get(i).setBackground(getResources().getDrawable(table.getPlayers().get(0).getPlayerCards().get(i).getImage()));
         }
 
-        callingAdut(table, playerButtons, adutImageViews, currentAdut);
+        callingAdut(table, playerButtons, adutImageViews, currentAdut, cardImageView);
 
     }
 
-    public void callingAdut(final Table table, final ArrayList<PlayerButton> playerButtons, final ArrayList<AdutImageView> adutImageViews,final  AdutImageView currentAdut){
+    public void callingAdut(final Table table, final ArrayList<PlayerButton> playerButtons, final ArrayList<AdutImageView> adutImageViews, final AdutImageView currentAdut, final ArrayList<CardImageView> cardImageView) {
 
         for(final AdutImageView adutImageView:adutImageViews) {
             adutImageView.setVisibility(View.VISIBLE);
@@ -150,8 +164,9 @@ public class Igranje extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     table.setCurrentAdut(adutImageView.getAdutColor());
-                    setAdutsToPlayersCards(table, playerButtons, adutImageViews, currentAdut);
-
+                    currentAdut.setAdutColor(adutImageView.getAdutColor());
+                    currentAdut.setImageResource(adutImageView.getColorImage());
+                    setAdutsToPlayersCards(table, playerButtons, adutImageViews, currentAdut, cardImageView);
                 }
 
             });
@@ -160,7 +175,7 @@ public class Igranje extends AppCompatActivity {
 
     }
 
-    public void setAdutsToPlayersCards(final Table table, final ArrayList<PlayerButton> playerButtons,final ArrayList<AdutImageView> adutImageViews, AdutImageView currentAdut){
+    public void setAdutsToPlayersCards(final Table table, final ArrayList<PlayerButton> playerButtons, final ArrayList<AdutImageView> adutImageViews, final AdutImageView currentAdut, final ArrayList<CardImageView> cardImageView) {
 
         for (final AdutImageView adutImageView : adutImageViews){
             adutImageView.setVisibility(View.INVISIBLE);
@@ -174,31 +189,131 @@ public class Igranje extends AppCompatActivity {
             }
         }
 
-        playWhileCardsLeft(table, playerButtons, adutImageViews, currentAdut);
+        playWhileCardsLeft(table, playerButtons, adutImageViews, currentAdut, cardImageView);
 
     }
 
-    public void playWhileCardsLeft(final Table table, final ArrayList<PlayerButton> playerButtons, final ArrayList<AdutImageView> adutImageViews, AdutImageView currentAdut){
+    public void playWhileCardsLeft(final Table table, final ArrayList<PlayerButton> playerButtons, final ArrayList<AdutImageView> adutImageViews, final AdutImageView currentAdut, final ArrayList<CardImageView> cardImageView) {
+
+        table.updateColorPlayed();
+
+        final Handler mHandler = new Handler();
+
+        mHandler.postDelayed(new Runnable() {
+            public void run() {
+                doNothing();
+            }
+        }, 1000);
 
         for(final PlayerButton playerButton:playerButtons){
             playerButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    table.setCardOnTable(playerButton.getCard());
+                    if (table.getPlayerOnMove() == table.getPlayers().get(0)) {
+                        table.getPlayers().get(0).setPlayedCard(playerButton.getCard());
+                        playerButton.setCard(null);
+                        playerButton.setClickable(false);
+                        if (table.getPlayers().get(1).getCardOnTable() == null) {
+                            addScore(table, playerButtons, adutImageViews, currentAdut, cardImageView);
+                            table.setPlayerOnMove(table.getPlayers().get(1));
+                            othersPlay(table, playerButtons, adutImageViews, currentAdut, cardImageView);
+                        } else {
+                            addScore(table, playerButtons, adutImageViews, currentAdut, cardImageView);
+                            if (table.getPlayerOnMove().getPlayerCards().size() > 0) {
+                                int a = 0;
+                                for (int i = 0; i < 4; i++) {
+                                    for (Player player : table.getPlayers()) {
+                                        if (table.getLastPlayerOnMove() == player) {
+                                            a = i;
+                                        }
+                                    }
+                                }
+                                if (a > 3) {
+                                    a = a - 4;
+                                }
+                                table.setPlayerOnMove(table.getPlayers().get(a));
+
+                                if (table.getPlayerOnMove() == table.getPlayers().get(0)) {
+                                    playWhileCardsLeft(table, playerButtons, adutImageViews, currentAdut, cardImageView);
+                                } else {
+                                    othersPlay(table, playerButtons, adutImageViews, currentAdut, cardImageView);
+                                }
+                            } else {
+                                int a = 0;
+                                for (int i = 0; i < 4; i++) {
+                                    for (Player player : table.getPlayers()) {
+                                        if (table.getLastFirstPlayerOnMove() == player) {
+                                            a = i;
+                                        }
+                                    }
+                                }
+                                if (a > 3) {
+                                    a = a - 4;
+                                }
+                                table.setPlayerOnMove(table.getPlayers().get(a));
+
+                                if (table.getPlayerOnMove() == table.getPlayers().get(0)) {
+                                    playWhileCardsLeft(table, playerButtons, adutImageViews, currentAdut, cardImageView);
+                                } else {
+                                    othersPlay(table, playerButtons, adutImageViews, currentAdut, cardImageView);
+                                }
+                            }
+                        }
+                    } else {
+                        othersPlay(table, playerButtons, adutImageViews, currentAdut, cardImageView);
+                    }
                 }
             });
         }
+    }
 
-        for(Player player:table.getPlayers()){
-            if(player.getPlayerCards().size()==0){
-                addScore(table,playerButtons, adutImageViews, currentAdut);
+    public void othersPlay(final Table table, final ArrayList<PlayerButton> playerButtons, final ArrayList<AdutImageView> adutImageViews, AdutImageView currentAdut, final ArrayList<CardImageView> cardImageView) {
+
+        final Handler mHandler = new Handler();
+
+        mHandler.postDelayed(new Runnable() {
+            public void run() {
+                doNothing();
+            }
+        }, 1000);
+
+        table.updateColorPlayed();
+
+        Player thisTimePlayerOnMove = table.getPlayerOnMove();
+
+        Card card = table.getPlayerOnMove().play(table, thisTimePlayerOnMove);
+
+        for (Card playedCard : table.getPlayerOnMove().getPlayerCards()) {
+            if (playedCard == card) {
+                playedCard = null;
             }
         }
 
+        table.getPlayerOnMove().setPlayedCard(card);
+
+        boolean bool = false;
+
+        for (Player player : table.getPlayers()) {
+            if (player == table.getPlayers().get(3)) {
+                table.setPlayerOnMove(table.getPlayers().get(0));
+                break;
+            }
+            if (bool) {
+                table.setPlayerOnMove(player);
+                break;
+            } else {
+                if (player == thisTimePlayerOnMove) {
+                    bool = true;
+                }
+            }
+        }
+
+        playWhileCardsLeft(table, playerButtons, adutImageViews, currentAdut, cardImageView);
+
     }
 
-    public void addScore(final Table table, final ArrayList<PlayerButton> playerButtons,final ArrayList<AdutImageView> adutImageViews, AdutImageView currentAdut){
-
+    public int addScore(final Table table, final ArrayList<PlayerButton> playerButtons, final ArrayList<AdutImageView> adutImageViews, AdutImageView currentAdut, final ArrayList<CardImageView> cardImageView) {
+        return 1;
     }
 
     public List<Card> sortCards(List<Card> playerCards){
@@ -233,5 +348,8 @@ public class Igranje extends AppCompatActivity {
 
         return list;
 
+    }
+
+    public void doNothing() {
     }
 }
